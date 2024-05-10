@@ -54,6 +54,8 @@ function init() {
 
     const loader = new GLTFLoader(); //loads 3d models
 
+    camera.position.y = 2; // Adjust the z-position of the camera here
+
     //loads the bedroom
     loader.load ('assets/Another_bedroom.glb', function (gltf) { 
         const room = gltf.scene;
