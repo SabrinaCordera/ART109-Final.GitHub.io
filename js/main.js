@@ -30,6 +30,7 @@ const farPlane = 1000;
 const dpr = window.devicePixelRatio;
 let plane;
 let plane2;
+let plantimg;
 let room;
 let plant;
 let teddybear;
@@ -97,8 +98,10 @@ function init() {
     gltfLoader.load('assets/longcat.glb', function (gltf) {
         longcat = gltf.scene;
         scene.add(longcat);
-        longcat.scale.set(1, 1, 1); 
-    
+        longcat.scale.set(5, 5, 5); 
+        longcat.rotation.x = 3.2;
+        longcat.rotation.y = 2;
+        longcat.position.set(1.5, 0.7, 1);
     });
 
     //load moogle
@@ -143,6 +146,7 @@ function init() {
     });
 }
 
+//images outside the window and the timer to change images
 function createPlane() {
     const geometry = new THREE.PlaneGeometry(5, 5);
     const material = new THREE.MeshBasicMaterial({ map: textures[0] });
@@ -159,6 +163,7 @@ function changeTexture() {
     }
 }
 
+//computer images and the timer they change with 
 function createPlane2() {
     const geometry2 = new THREE.PlaneGeometry(1.1, 0.65);
     const material2 = new THREE.MeshBasicMaterial({ map: textures2[0] });
@@ -174,6 +179,37 @@ function changeTexture2() {
         plane2.material.needsUpdate = true;
     }
 }
+
+// Function to create a plane with a potted plant image
+function createPlant() {
+    const geometry3 = new THREE.PlaneGeometry(10, 10);  // Adjust size as needed
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('assets/pottedplant.png');  // Load your image texture
+
+    const material3 = new THREE.MeshBasicMaterial({ map: texture });  // Create material with texture
+    plantimg = new THREE.Mesh(geometry3, material3);  // Assign to correct variable
+    scene.add(plantimg);
+    
+    // Adjust position and rotation as needed
+    plantimg.position.set(1, 1, 1);
+    plantimg.rotation.x = 1;  // Rotate the plane to be perpendicular to the floor
+}
+
+// Function to create a plane with a teddy bear image
+// function createBear() {
+//     const geometry4 = new THREE.PlaneGeometry(5, 5);  // Adjust size as needed
+//     const textureLoader = new THREE.TextureLoader();
+//     const texture = textureLoader.load('assets/teddy-bear.png');  // Load your image texture
+
+//     const material4 = new THREE.MeshBasicMaterial({ map: texture });  // Create material with texture
+//     bearimg = new THREE.Mesh(geometry4, material4);  // Assign to correct variable
+//     scene.add(bearimg);
+    
+//     // Adjust position and rotation as needed
+//     bearimg.position.set(1, 1, 1);
+//     // plantimg.rotation.x = 1;  // Rotate the plane to be perpendicular to the floor
+// }
+
 
 function centerCameraInRoom() {
     const box = new THREE.Box3().setFromObject(room);
