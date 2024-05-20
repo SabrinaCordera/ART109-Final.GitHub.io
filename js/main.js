@@ -339,6 +339,7 @@ function centerCameraInRoom() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+    plane.position.set(0,1,4);
     render();
 }
 
