@@ -31,6 +31,7 @@ const dpr = window.devicePixelRatio;
 let plane;
 let plane2;
 let plantimg;
+let bearimg;
 let room;
 let plant;
 let teddybear;
@@ -102,6 +103,7 @@ function init() {
         longcat.rotation.x = 3.2;
         longcat.rotation.y = 2;
         longcat.position.set(1.5, 0.7, 1);
+        toggleVisibilityRandomly(longcat); // Call function to toggle visibility
     });
 
     //load moogle
@@ -111,6 +113,7 @@ function init() {
         moogle.scale.set(0.1, 0.1, 0.1); 
         moogle.position.set(-0.8, 1, 3.5);
         moogle.rotation.y = 3;
+        toggleVisibilityRandomly(moogle); // Call function to toggle visibility
     });
 
     //load potted plant
@@ -119,6 +122,7 @@ function init() {
         scene.add(plant);
         plant.scale.set(0.1, 0.1, 0.1); 
         plant.position.set(3.3, 3.3, 3.5);
+        toggleVisibilityRandomly(plant); // Call function to toggle visibility
     });
 
     //load teddy bear
@@ -128,6 +132,7 @@ function init() {
         teddybear.scale.set(0.7, 0.7, 0.7); 
         teddybear.position.set(-3, 1.1, 2);
         teddybear.rotation.y = 2;
+        toggleVisibilityRandomly(teddybear); // Call function to toggle visibility
     });
 
     //load book pile
@@ -136,6 +141,7 @@ function init() {
         scene.add(bookpile);
         bookpile.scale.set(0.05, 0.05, 0.05); 
         bookpile.position.set(-2.9, 1.42, -2.4);
+        toggleVisibilityRandomly(bookpile); // Call function to toggle visibility
     });
 
     // Load the bedroom
@@ -144,6 +150,16 @@ function init() {
         scene.add(room);
         centerCameraInRoom();
     });
+     // Call functions to create the planes with images
+     createPlant();
+     createBear();
+}
+
+// Function to toggle visibility randomly
+function toggleVisibilityRandomly(object) {
+    setInterval(() => {
+        object.visible = !object.visible;
+    }, Math.random() * 60000 + 3000); // Random interval between 3 seconds and 1 minute
 }
 
 //images outside the window and the timer to change images
@@ -182,35 +198,40 @@ function changeTexture2() {
 
 // Function to create a plane with a potted plant image
 function createPlant() {
-    const geometry3 = new THREE.PlaneGeometry(10, 10);  // Adjust size as needed
-    const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load('assets/pottedplant.png');  // Load your image texture
+    const geometry3 = new THREE.PlaneGeometry(1, 1);  // Adjust size as needed
+    const textureLoader3 = new THREE.TextureLoader();
+    const texture3 = textureLoader3.load('assets/pottedplant.png');  // Load your image texture
 
-    const material3 = new THREE.MeshBasicMaterial({ map: texture });  // Create material with texture
+    const material3 = new THREE.MeshBasicMaterial({ map: texture3 });  // Create material with texture
     plantimg = new THREE.Mesh(geometry3, material3);  // Assign to correct variable
     scene.add(plantimg);
     
     // Adjust position and rotation as needed
-    plantimg.position.set(1, 1, 1);
-    plantimg.rotation.x = 1;  // Rotate the plane to be perpendicular to the floor
+    plantimg.position.set(2, 3.8, 3.6);
+    plantimg.rotation.y = 3.3;  // Rotate the plane to be perpendicular to the floor
+
+    toggleVisibilityRandomly(plantimg); // Call function to toggle visibility
 }
 
 // Function to create a plane with a teddy bear image
-// function createBear() {
-//     const geometry4 = new THREE.PlaneGeometry(5, 5);  // Adjust size as needed
-//     const textureLoader = new THREE.TextureLoader();
-//     const texture = textureLoader.load('assets/teddy-bear.png');  // Load your image texture
+function createBear() {
+    const geometry4 = new THREE.PlaneGeometry(1, 1);  // Adjust size as needed
+    const textureLoader4 = new THREE.TextureLoader();
+    const texture4 = textureLoader4.load('assets/teddybear.png');  // Load your image texture
 
-//     const material4 = new THREE.MeshBasicMaterial({ map: texture });  // Create material with texture
-//     bearimg = new THREE.Mesh(geometry4, material4);  // Assign to correct variable
-//     scene.add(bearimg);
+    const material4 = new THREE.MeshBasicMaterial({ map: texture4 });  // Create material with texture
+    bearimg = new THREE.Mesh(geometry4, material4);  // Assign to correct variable
+    scene.add(bearimg);
     
-//     // Adjust position and rotation as needed
-//     bearimg.position.set(1, 1, 1);
-//     // plantimg.rotation.x = 1;  // Rotate the plane to be perpendicular to the floor
-// }
+    // Adjust position and rotation as needed
+    bearimg.position.set(-3, 1.5, 1.3);
+    bearimg.rotation.y = 1.5;  // Rotate the plane to be perpendicular to the floor
+
+    toggleVisibilityRandomly(bearimg); // Call function to toggle visibility
+}
 
 
+// Function to center the camera in the room
 function centerCameraInRoom() {
     const box = new THREE.Box3().setFromObject(room);
     const center = new THREE.Vector3();
