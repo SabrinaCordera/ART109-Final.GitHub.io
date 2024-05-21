@@ -53,6 +53,15 @@ const texturePathsComp = [
     'assets/screensaver4.jpeg'
 ];
 
+const audioloop = [
+    'assets/sounds/breathe.mp3',
+    'assets/sounds/forget-muffled.mp3',
+    'assets/sounds/forget.mp3',
+    'assets/sounds/relaxmuscles.mp3',
+    'assets/sounds/repeat-muffled.mp3',
+    'assets/sounds/repeat.mp3'
+];
+
 // ~~~~~~~~~~~~~~~~Create scene here~~~~~~~~~~~~~~~~
 
 function init() {
@@ -153,6 +162,10 @@ function init() {
      // Call functions to create the planes with images
      createPlant();
      createBear();
+
+      // Add event listener to play sound on button click
+    const soundButton = document.getElementById('play-sound-btn');
+    soundButton.addEventListener('click', playSound);
 }
 
 // Function to toggle visibility randomly
@@ -161,6 +174,35 @@ function toggleVisibilityRandomly(object) {
         object.visible = !object.visible;
     }, Math.random() * 60000 + 3000); // Random interval between 3 seconds and 1 minute
 }
+
+// Function to play sounds
+function playSound() {
+    // Background sound
+    const backgroundAudio = new Audio('assets/sounds/Background-sound.mp3');
+    backgroundAudio.loop = true;
+    backgroundAudio.play();
+
+       // Shuffle the audioloop array
+       const shuffledAudioloop = shuffleArray([...audioloop]);
+
+       // Play each sound with a random delay
+       shuffledAudioloop.forEach((soundPath, index) => {
+           setTimeout(() => {
+               const audio = new Audio(soundPath);
+               audio.loop = true; // Set the audio to loop
+               audio.play();
+           }, Math.random() * 60000); // Random delay every 1 minute
+       });
+   }
+   
+   // Function to shuffle an array
+   function shuffleArray(array) {
+       for (let i = array.length - 1; i > 0; i--) {
+           const j = Math.floor(Math.random() * (i + 1));
+           [array[i], array[j]] = [array[j], array[i]];
+       }
+       return array;
+   }
 
 //images outside the window and the timer to change images
 function createPlane() {
