@@ -227,7 +227,7 @@ function createPlane2() {
     const material2 = new THREE.MeshBasicMaterial({ map: textures2[0] });
     plane2 = new THREE.Mesh(geometry2, material2);
     scene.add(plane2);
-    setInterval(changeTexture2, 80000); // Change texture every 120 seconds
+    setInterval(changeTexture2, 60000); // Change texture every 1 minute
 }
 
 function changeTexture2() {
@@ -279,7 +279,7 @@ function centerCameraInRoom() {
     const center = new THREE.Vector3();
     box.getCenter(center);
     camera.position.copy(center);
-    camera.position.z += 10; // Move the camera back to view the room
+    camera.position.z += 1; // Move the camera back to view the room
     controls = new OrbitControls(camera, renderer.domElement);
     controls.target.copy(center);
     controls.update();
