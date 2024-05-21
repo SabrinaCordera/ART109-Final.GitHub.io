@@ -2,13 +2,6 @@
 // Basic Three.JS scene from documentation, importing Three.JS through a CDN 
 // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
 
-// let beat = new Audio('assets/Forest-Sounds.mp3');
-// window.addEventListener('keypress',function(){
-//   // Play the beat
-// beat.play();
-// beat.loop(true);
-// });
-
 
 
 import * as THREE from 'three';
@@ -32,8 +25,12 @@ let plane;
 let plane2;
 let plantimg;
 let bearimg;
+let posterimg;
 let room;
 let plant;
+let ramen;
+let dumplings;
+let riceballs;
 let teddybear;
 let bookpile;
 let moogle;
@@ -153,15 +150,46 @@ function init() {
         toggleVisibilityRandomly(bookpile); // Call function to toggle visibility
     });
 
+    //load riceballs
+    gltfLoader.load('assets/riceballs.glb', function (gltf) {
+        riceballs = gltf.scene;
+        scene.add(riceballs);
+        // riceballs.scale.set(0.05, 0.05, 0.05); 
+        riceballs.position.set(2, 0.7, -0.2);
+        riceballs.rotation.y = 1.5;
+        toggleVisibilityRandomly(riceballs); // Call function to toggle visibility
+    });
+
+     //load dumplings
+     gltfLoader.load('assets/dumplings.glb', function (gltf) {
+        dumplings = gltf.scene;
+        scene.add(dumplings);
+        // dumplings.scale.set(0.05, 0.05, 0.05); 
+        dumplings.position.set(1.3, 0.7, 0.5);
+        toggleVisibilityRandomly(dumplings); // Call function to toggle visibility
+    });
+
+    //load ramen bowl
+    gltfLoader.load('assets/ramen-bowl.glb', function (gltf) {
+        ramen = gltf.scene;
+        scene.add(ramen);
+        // ramen.scale.set(0.05, 0.05, 0.05); 
+        ramen.position.set(-0.4, 0.7, -1.5);
+        toggleVisibilityRandomly(ramen); // Call function to toggle visibility
+    });
+
+
     // Load the bedroom
     gltfLoader.load('assets/bedroom3.glb', function (gltf) {
         room = gltf.scene;
         scene.add(room);
         centerCameraInRoom();
     });
+
      // Call functions to create the planes with images
      createPlant();
      createBear();
+     createPoster();
 
       // Add event listener to play sound on button click
     const soundButton = document.getElementById('play-sound-btn');
@@ -272,6 +300,22 @@ function createBear() {
     toggleVisibilityRandomly(bearimg); // Call function to toggle visibility
 }
 
+// Function to create a plane with a poster image
+function createPoster() {
+    const geometry5 = new THREE.PlaneGeometry(1, 1);  // Adjust size as needed
+    const textureLoader5 = new THREE.TextureLoader();
+    const texture5 = textureLoader5.load('assets/positiveposter.jpeg');  // Load your image texture
+
+    const material5 = new THREE.MeshBasicMaterial({ map: texture5 });  // Create material with texture
+    posterimg = new THREE.Mesh(geometry5, material5);  // Assign to correct variable
+    scene.add(posterimg);
+    
+    // Adjust position and rotation as needed
+    posterimg.position.set(1, 3, -3);
+    posterimg.rotation.y = 6.3;  // Rotate the plane to be perpendicular to the floor
+
+    toggleVisibilityRandomly(posterimg); // Call function to toggle visibility
+}
 
 // Function to center the camera in the room
 function centerCameraInRoom() {
